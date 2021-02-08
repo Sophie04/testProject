@@ -3,7 +3,6 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HomeController;
-// use App\Http\Controllers\ShowProfile;
 
 /*
 |--------------------------------------------------------------------------
@@ -24,4 +23,5 @@ Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 // Route::get('/profile', [App\Htpp\Controllers\ShowProfile::class, 'viewAll'])->name('profile');
-Route::get('/profile', 'App\Http\Controllers\ShowProfile@viewAll')->name('profile');
+Route::get('/profile', 'App\Http\Controllers\ShowProfile@viewProfile')->name('profile');
+Route::post('/profile', 'App\Http\Controllers\ShowProfile@updateProfile')->name('profile');

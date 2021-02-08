@@ -3,10 +3,12 @@
 namespace App\Http\Livewire;
 use App\Models\User;
 use Livewire\Component;
+use Livewire\WithFileUploads;
 
 
 class UserProfile extends Component
 {
+    use WithFileUploads;
 	public $userId;
     public $firstName;
     public $lastName;
@@ -36,6 +38,7 @@ class UserProfile extends Component
          
         if(count($data)) {
             User::find($this->userId)->update($data);
+            // $this->photo->store('photos');
             return redirect()->to('/profile');
         }
     }
