@@ -8,7 +8,6 @@ use Auth;
 
 class ShowProfile extends Controller
 {
-    
     public function viewProfile()
     {
         return view('user.profile', array('user' => Auth::user()));
