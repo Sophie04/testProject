@@ -4,7 +4,9 @@ namespace App\Http\Livewire;
 use App\Models\User;
 use Livewire\Component;
 use Livewire\WithFileUploads;
-
+use Storage;
+// use Illuminate\Support\Facades\File;
+use File;
 
 class UserProfile extends Component
 {
@@ -36,9 +38,15 @@ class UserProfile extends Component
         $data = array_merge($data, ['photo' => $this->photo]);
         $data = array_merge($data, ['email' => $this->email]);
          
+        
         if(count($data)) {
             User::find($this->userId)->update($data);
-            // $this->photo->store('photos');
+            $filename = $this->photo->store('photos');
+            $data = array_merge($data, ['photo' => $filename]);
+            User::find($this->userId)->update($data);
+            $file = storage_path('app/public/'.$filename);
+            $destination = public_path('uploads/'.$filename);
+            File::copy($file,$destination);
             return redirect()->to('/profile');
         }
     }
