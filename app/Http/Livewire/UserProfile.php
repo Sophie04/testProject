@@ -5,7 +5,6 @@ use App\Models\User;
 use Livewire\Component;
 use Livewire\WithFileUploads;
 use Storage;
-// use Illuminate\Support\Facades\File;
 use File;
 
 class UserProfile extends Component
@@ -17,6 +16,7 @@ class UserProfile extends Component
     public $description;
     public $photo;
     public $email;
+    public $oldPhoto;
 
     public function mount(){
     	$this->userId = auth()->user()->id;
@@ -26,6 +26,7 @@ class UserProfile extends Component
         $this->description = $model->description;
         $this->photo = $model->photo;
         $this->email = $model->email;
+        $this->oldPhoto = $model->photo;
     }
 
     public function save()
@@ -46,7 +47,15 @@ class UserProfile extends Component
             User::find($this->userId)->update($data);
             $file = storage_path('app/public/'.$filename);
             $destination = public_path('uploads/'.$filename);
-            File::copy($file,$destination);
+            if(File::copy($file,$destination))
+            {
+                if($this->oldPhoto != "photos/user.jpg")
+                {
+                    File::delete(public_path('uploads/'.$this->oldPhoto));
+                    File::delete(storage_path('app/public/'.$this->oldPhoto));
+                }
+            };
+            
             return redirect()->to('/profile');
         }
     }
