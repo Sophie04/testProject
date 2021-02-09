@@ -29,7 +29,7 @@
 	    	<p style="color: red">{{$errors->first('photo')}}</p>
 	    @endif -->
 	    <label for="photo">Avatar</label>
-    	<input type="file" wire:model="photo" name="photo" class="border border-gray-400 p-2 w-full" required>
+    	<input type="file" wire:model="photo" name="photo" accept="image/png, image/jpeg" class="border border-gray-400 p-2 w-full" required>
     	<input type="hidden" name="_token" value="{{ csrf_token() }}">
     	@error('photo') <span class="error">{{$message}}</span>@enderror
     	<br>
