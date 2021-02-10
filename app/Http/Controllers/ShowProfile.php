@@ -3,21 +3,13 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Http\Requests;
+use Auth;
 
 class ShowProfile extends Controller
 {
-     public function __construct()
+    public function viewProfile()
     {
-        $this->middleware('auth');
-    }
-    /**
-     * Handle the incoming request.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
-    {
-        return view('user.profile');
+        return view('user.profile', array('user' => Auth::user()));
     }
 }
