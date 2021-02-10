@@ -4,7 +4,6 @@ namespace App\Http\Livewire;
 use App\Models\User;
 use Livewire\Component;
 use Livewire\WithFileUploads;
-use Storage;
 use File;
 
 class UserProfile extends Component
