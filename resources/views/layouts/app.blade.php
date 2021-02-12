@@ -82,22 +82,36 @@
             </div>
         </nav>
 
-        <main class="py-10">
+        <main class="pt-20">
             @yield('content')
         </main>
     </div>
     @livewireScripts
     <script type="text/javascript">
-        document.getElementById('dropdown').onclick = function() {
-             if ( document.getElementById("dropdown-menu").classList.contains('block') ){
+        window.addEventListener('click', function(e){
+            if (document.getElementById('dropdown').contains(e.target)){
+                document.getElementById('dropdown').onclick = function() {
+                     if ( document.getElementById("dropdown-menu").classList.contains('block') ){
+                        document.getElementById("dropdown-menu").classList.add('hidden');
+                        document.getElementById("dropdown-menu").classList.remove('block');
+                    }
+                    else{                
+                        document.getElementById("dropdown-menu").classList.add('block');
+                        document.getElementById("dropdown-menu").classList.remove('hidden');
+                    }
+                }
+            }
+            else{
                 document.getElementById("dropdown-menu").classList.add('hidden');
                 document.getElementById("dropdown-menu").classList.remove('block');
             }
-            else{                
-                document.getElementById("dropdown-menu").classList.add('block');
-                document.getElementById("dropdown-menu").classList.remove('hidden');
-            }
-        }
+        })
+    </script>
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"
+      integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0="
+      crossorigin="anonymous"
+    >
     </script>
 </body>
 </html>
