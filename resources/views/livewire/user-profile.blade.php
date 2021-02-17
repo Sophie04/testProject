@@ -2,35 +2,35 @@
 	<form wire:submit.prevent="save" enctype="multipart/form-data" action="/profile" method="POST">
 	    <div class="form-group p-2 row mx-auto">
 		    <label for="firstName" class="col-md-4 col-form-label text-lg text-md-right">First Name</label>
-		    <input wire:model="firstName" type="text" class="bg-gray-200 focus:bg-gray-100 box-border rounded form-control text-center" required>
-		    @if ($errors->has('firstName'))
-		    	<p style="color: red">{{$errors->first('firstName')}}</p>
-		    @endif
+		    <input wire:model="firstName" type="text" class="bg-gray-200 focus:bg-gray-100 box-border rounded form-control text-center" required>		    
 		</div>
+		@if ($errors->has('firstName'))
+		    <p style="color: red">{{$errors->first('firstName')}}</p>
+		@endif
 
 	    <div class="form-group p-2 row mx-auto">
 		    <label for="lastName" class="col-md-4 col-form-label text-lg text-md-right">Last Name</label>
 		    <input wire:model="lastName" type="text" class="bg-gray-200 focus:bg-gray-100 box-border rounded form-control text-center" required>
-		    @if ($errors->has('lastName'))
-		    	<p style="color: red">{{$errors->first('lastName')}}</p>
-		    @endif
 		</div>		    
+		@if ($errors->has('lastName'))
+		    <p style="color: red">{{$errors->first('lastName')}}</p>
+		@endif
 
 		<div class="form-group p-2 row mx-auto">
 		    <label for="email" class="col-md-4 col-form-label text-lg text-md-right pr-11">Email</label>
-		    <input wire:model="email" type="text" class="bg-gray-200 focus:bg-gray-100 box-border rounded form-control text-center" required>
-		    @if ($errors->has('email'))
-		    	<p style="color: red">{{$errors->first('email')}}</p>
-		    @endif
+		    <input wire:model="email" type="email" class="bg-gray-200 focus:bg-gray-100 box-border rounded form-control text-center" required>
 		</div>
+		@if ($errors->has('email'))
+		    <p style="color: red">{{$errors->first('email')}}</p>
+		@endif
 
 		<div class="form-group p-2 row mx-auto">
 		    <label for="description" class="col-md-4 col-form-label text-lg text-md-right">Description</label>
-		    <input wire:model="description" type="text" class="bg-gray-200 focus:bg-gray-100 box-border rounded form-control text-center" required>
-		    @if ($errors->has('description'))
-		    	<p style="color: red">{{$errors->first('description')}}</p>
-		    @endif
+		    <input wire:model="description" type="text" class="bg-gray-200 focus:bg-gray-100 box-border rounded form-control text-center" required>		    
 		</div>
+		@if ($errors->has('description'))
+		    <p style="color: red">{{$errors->first('description')}}</p>
+		@endif
 
 	    <!-- <label>Profile Photo</label>
 	    @if ($errors->has('photo'))

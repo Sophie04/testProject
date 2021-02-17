@@ -13,11 +13,11 @@
 
                         <input type="hidden" name="token" value="{{ $token }}">
 
-                        <div class="form-group p-2 row">
+                        <div class="form-group p-2 row mx-auto">
                             <label for="email" class="col-md-4 col-form-label text-lg text-md-right">{{ __('E-Mail Address') }}</label>
 
                             <div class="col-md-6">
-                                <input id="email" type="email" class="bg-gray-200 focus:bg-gray-100 box-border rounded form-control @error('email') is-invalid @enderror" name="email" value="{{ $email ?? old('email') }}" required autocomplete="email" autofocus>
+                                <input id="email" type="email" class="bg-gray-200 focus:bg-gray-100 box-border rounded form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required autocomplete="email" autofocus>
 
                                 @error('email')
                                     <span class="invalid-feedback" role="alert">

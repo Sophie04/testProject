@@ -18,12 +18,25 @@
 
     <!-- Styles -->
     <!-- <link href="{{ asset('css/app.css') }}" rel="stylesheet"> -->
-    <link href="css/app.css" rel="stylesheet">
+    <link href="/css/app.css" rel="stylesheet">
     <!-- <link href="https://unpkg.com/tailwindcss@^2.0/dist/tailwind.min.css" rel="stylesheet"> -->
     @livewireStyles
 </head>
 <body class="bg-white">
     <div id="app">
+        @if (Route::has('login'))
+            <div class="hidden fixed top-0 right-0 px-6 py-4 sm:block">
+                @auth
+                    <a href="{{ url('/home') }}" class="text-sm text-gray-700 underline">Home</a>
+                @else
+                    <a href="{{ route('login') }}" class="text-sm text-gray-700 underline">Login</a>
+
+                    @if (Route::has('register'))
+                        <a href="{{ route('register') }}" class="ml-4 text-sm text-gray-700 underline">Register</a>
+                    @endif
+                @endauth
+            </div>
+        @endif
         <nav class="relative flex flex-wrap items-center justify-between px-2 py-3 navbar-expand-lg bg-gray-600 mb-3">
             <div class="px-4 flex flex-grow justify-between">
                 <a class="flex-no-grow flex-no-shrink relative py-2 px-4 leading-normal text-gray-100 no-underline flex items-center hover:bg-gray-dark justify-start" href="{{ url('/') }}">
@@ -66,6 +79,7 @@
                                     </button>                                
                                 <div class="absolute hidden group-hover:block origin-top-right right-0 mt-4 w-56 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5" id="dropdown-menu" aria-orientation="vertical" aria-labelledby="options-menu">
                                         <a class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900" role="menuitem" href="{{ route('profile') }}">{{ __('My Profile') }}</a>
+                                        <a class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900" role="menuitem" href="{{ route('posts') }}">{{ __('Posts') }}</a>
                                         <a class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900" role="menuitem" href="{{ route('logout') }}"
                                             onclick="event.preventDefault();
                                                      document.getElementById('logout-form').submit();">
