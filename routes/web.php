@@ -26,7 +26,7 @@ Auth::routes();
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 // Route::get('/home', function(){
 // 	return view('home', [
-// 		'posts'=>App\Models\Post::latest()->get()
+// 		'posts'=>App\Models\Post::latest('updated_at')->get()
 // 	]);	
 // });
 
@@ -41,4 +41,6 @@ Route::group(['middleware' => 'auth'], function(){
 	Route::get('/posts/{post}/edit', 'App\Http\Controllers\PostsController@edit');
 	Route::get('/posts/{post}/delete', 'App\Http\Controllers\PostsController@destroy');
 	Route::post('/posts/{post}', 'App\Http\Controllers\PostsController@update');
+
+	Route::get('posts/{post}/comments', 'App\Http\Controllers\CommentsController@showAll');
 });

@@ -12,7 +12,8 @@ class PostsController extends Controller
 {
 	
 	public function showAll(){
-		$posts = Post::latest()->get();
+		// $posts = Post::latest()->get();
+		$posts = Post::latest()->paginate(3);
 		return view('posts.index', ['posts'=>$posts]);
 	}
 
@@ -26,8 +27,8 @@ class PostsController extends Controller
 
     public function store(){
     	request()->validate([
-    		'title' => ['required', 'min:3'],
-    		'content' => ['required']
+    		'title' => ['required', 'min:3', 'alpha'],
+    		'content' => ['required', 'alpha']
     	]);
     	
     	Post::create([
