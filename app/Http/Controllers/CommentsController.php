@@ -20,7 +20,6 @@ class CommentsController extends Controller
 	}
 
 	public function create(){
-    	// return view('comments.create');
         $comments = Comment::where('postId', request()->segment(2))->get();
         return view('comments.create', ['comments'=>$comments], ['post'=>Post::where('id', request()->segment(2))->first()]);
     }
@@ -46,7 +45,7 @@ class CommentsController extends Controller
     public function edit(Comment $comment){
         if($comment->userId == Auth::user()->id)
     	   return view('comments.edit', compact('comment'));
-        else return redirect('/posts/' . request()->segment(2) . 'comments');
+        else return redirect('/posts/' . request()->segment(2) . '/comments');
     }
 
     public function update(Comment $comment){
@@ -54,13 +53,19 @@ class CommentsController extends Controller
     		'commBody' => ['required', 'min:3']
     	]));
         $comments = Comment::where('postId', request()->segment(2))->latest("updated_at")->paginate(3);
-    	// return view('comments.show', ['comments'=>$comments], ['post'=>Post::where('id', request()->segment(2))->first()]);
-        return redirect('/posts/' . request()->segment(2) . 'comments');
+    	return view('comments.show', ['comments'=>$comments], ['post'=>Post::where('id', request()->segment(2))->first()]);
+        // return redirect('/posts/' . request()->segment(2) . '/comments');
     }
 
-    public function destroy(Post $post){
-    	$post->delete();
-    	return redirect('/posts/' . $post->id);
+    public function destroy(){
+        $comment = Comment::where('id', request()->segment(4))->firstOrFail();
+        if($comment->userId == Auth::user()->id)
+            $comment->delete();
+        // return dd($commentId);
+     //    if($commentId == Auth::user()->id)
+     //        $comment = Comment::where('id', $commentId)->first();
+    	//     $comment->delete();
+    	return redirect('/posts/' . request()->segment(2) . '/comments');
     }
 
 }
