@@ -23,7 +23,7 @@ class CommentFactory extends Factory
     public function definition()
     {
         return [
-            'text' => $this->faker->sentence,
+            'commBody' => $this->faker->sentence,
             'userName' => $this->faker->name,
             'userPhoto' => 'photos/user.jpg',
             'userId' => '6',

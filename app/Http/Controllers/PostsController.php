@@ -27,8 +27,8 @@ class PostsController extends Controller
 
     public function store(){
     	request()->validate([
-    		'title' => ['required', 'min:3', 'alpha'],
-    		'content' => ['required', 'alpha']
+    		'title' => ['required', 'min:3'],
+    		'content' => ['required']
     	]);
     	
     	Post::create([
@@ -42,7 +42,9 @@ class PostsController extends Controller
     }
 
     public function edit(Post $post){
-    	return view('posts.edit', compact('post'));
+        if($post->userId == Auth::user()->id)
+    	   return view('posts.edit', compact('post'));
+        else return redirect('/posts');
     }
 
     public function update(Post $post){
@@ -55,7 +57,8 @@ class PostsController extends Controller
     }
 
     public function destroy(Post $post){
-    	$post->delete();
+    	if($post->userId == Auth::user()->id)
+            $post->delete();
     	return redirect('/posts');
     }
 }

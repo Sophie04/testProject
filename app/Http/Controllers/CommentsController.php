@@ -14,43 +14,48 @@ use App\Models\Comment;
 class CommentsController extends Controller
 {
     public function showAll(){
-		// $posts = Post::latest()->get();
-		// $comments = Comment::latest()->paginate(3);
-
-        $comments = Comment::where('postId', request()->segment(2))->latest()->paginate(3);
+        $comments = Comment::where('postId', request()->segment(2))->latest("updated_at")->paginate(3);
 
 		return view('comments.show', ['comments'=>$comments], ['post'=>Post::where('id', request()->segment(2))->first()]);
 	}
 
 	public function create(){
-    	return view('comments.create');
+    	// return view('comments.create');
+        $comments = Comment::where('postId', request()->segment(2))->get();
+        return view('comments.create', ['comments'=>$comments], ['post'=>Post::where('id', request()->segment(2))->first()]);
     }
 
     public function store(){
+        $comments = Comment::where('postId', request()->segment(2))->paginate(3);
     	request()->validate([
-    		'text' => ['required', 'min:3', 'alpha']
+    		'commBody' => ['required', 'min:3']
     	]);
     	
     	Comment::create([
-    		'text' => request('text'),
-    		'userName' => Auth::user()->get()->pluck('firstName', 'lastName'),
-    		'userPhoto' => Auth::user()->photo(),
+    		'commBody' => request('commBody'),
+    		'userName' => Auth::user()->fullName(),
+    		'userPhoto' => Auth::user()->photo,
+            'userId' => Auth::user()->id,
+            'postId' => request()->segment(2)
 
     	]);
 
-    	return redirect('/posts/' . $post->id);
+    	return view('comments.show', ['comments'=>$comments], ['post'=>Post::where('id', request()->segment(2))->first()]);
     }
 
     public function edit(Comment $comment){
-    	return view('comments.edit', compact('comment'));
+        if($comment->userId == Auth::user()->id)
+    	   return view('comments.edit', compact('comment'));
+        else return redirect('/posts/' . request()->segment(2) . 'comments');
     }
 
     public function update(Comment $comment){
     	$comment->update(request()->validate([
-    		'text' => ['required', 'min:3']
+    		'commBody' => ['required', 'min:3']
     	]));
-
-    	return redirect('/posts/' . $post->id);
+        $comments = Comment::where('postId', request()->segment(2))->latest("updated_at")->paginate(3);
+    	// return view('comments.show', ['comments'=>$comments], ['post'=>Post::where('id', request()->segment(2))->first()]);
+        return redirect('/posts/' . request()->segment(2) . 'comments');
     }
 
     public function destroy(Post $post){

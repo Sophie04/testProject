@@ -22,7 +22,7 @@
 
 						    <div class="form-group p-2 row mx-auto">
 							    <label for="content" class="col-md-4 col-form-label text-lg text-md-right">Content</label>
-							    <textarea name="content" class="bg-gray-200 focus:bg-gray-100 box-border rounded form-control" style="display: block; width: 100%; overflow: hidden; resize: both;" required>
+							    <textarea name="content" class="bg-gray-200 focus:bg-gray-100 box-border rounded form-control mx-auto text-center" style="display: block; width: 100%; overflow: hidden; resize: both;" required>
 								</textarea>
 							</div>		    
 							@if ($errors->has('content'))

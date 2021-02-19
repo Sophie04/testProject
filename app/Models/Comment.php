@@ -16,7 +16,9 @@ class Comment extends Model
      */
     // protected $table = "posts";
     protected $fillable = [
-        'text',
+        'commBody',
+        'userId',
+        'postId',
         'userName',
         'userPhoto',
     ];

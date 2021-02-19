@@ -35,12 +35,17 @@ Route::group(['middleware' => 'auth'], function(){
 
 	Route::get('/posts', 'App\Http\Controllers\PostsController@showAll')->name('posts');
 	Route::post('/posts', 'App\Http\Controllers\PostsController@store');
-
 	Route::get('/posts/create', 'App\Http\Controllers\PostsController@create');
 	Route::get('/posts/{post}', 'App\Http\Controllers\PostsController@show');
 	Route::get('/posts/{post}/edit', 'App\Http\Controllers\PostsController@edit');
 	Route::get('/posts/{post}/delete', 'App\Http\Controllers\PostsController@destroy');
 	Route::post('/posts/{post}', 'App\Http\Controllers\PostsController@update');
 
-	Route::get('posts/{post}/comments', 'App\Http\Controllers\CommentsController@showAll');
+	Route::get('/posts/{post}/comments', 'App\Http\Controllers\CommentsController@showAll');
+	Route::post('/posts/{post}/comments', 'App\Http\Controllers\CommentsController@store');
+	Route::get('/posts/{post}/comments/create', 'App\Http\Controllers\CommentsController@create');
+	Route::get('/posts/{post}/comments/{comment}/edit', 'App\Http\Controllers\CommentsController@edit');
+	Route::get('/posts/{post}/comments/{comment}/delete', 'App\Http\Controllers\CommentsController@destroy');
+	// Route::post('/posts/{post}/comments', 'App\Http\Controllers\CommentsController@update');
+	
 });
