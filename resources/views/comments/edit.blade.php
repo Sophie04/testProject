@@ -10,7 +10,7 @@
                 </div>
                 <div class="card-body p-3 flex justify-center text-center">
                     <div>
-						<form wire:submit.prevent="save" enctype="multipart/form-data" action="url('/posts/' . $post->id . '/comments/" method="POST">
+						<form wire:submit.prevent="save" enctype="multipart/form-data" action="/posts/{{ $post->id }}/comments/{{ $comment->id}}" method="POST">
 							@csrf
 						    <div class="form-group p-2 row mx-auto">
 							    <label for="commBody" class="col-md-4 col-form-label text-lg text-center">Content</label>

@@ -38,17 +38,22 @@ class CommentsController extends Controller
             'postId' => request()->segment(2)
 
     	]);
-
-    	return view('comments.show', ['comments'=>$comments], ['post'=>Post::where('id', request()->segment(2))->first()]);
+        $post = Post::where('id', request()->segment(2))->firstOrFail();
+    	// return view('comments.show', ['comments'=>$comments], ['post'=>Post::where('id', request()->segment(2))->first()]);
+        return redirect('/posts/' .$post->id . '/comments');
     }
 
-    public function edit(Comment $comment){
-        if($comment->userId == Auth::user()->id)
-    	   return view('comments.edit', compact('comment'));
-        else return redirect('/posts/' . request()->segment(2) . '/comments');
+    public function edit(){
+        $comment = Comment::where('id', request()->segment(4))->firstOrFail();
+        if($comment->userId == Auth::user()->id){
+            $post = Post::where('id', request()->segment(2))->firstOrFail();
+    	    return view('comments.edit', compact('comment', 'post'));
+        }   
+        else return redirect('/posts/' . $comment->postId . '/comments');
     }
 
-    public function update(Comment $comment){
+    public function update(){
+        $comment = Comment::where('id', request()->segment(4))->firstOrFail();
     	$comment->update(request()->validate([
     		'commBody' => ['required', 'min:3']
     	]));
@@ -59,12 +64,9 @@ class CommentsController extends Controller
 
     public function destroy(){
         $comment = Comment::where('id', request()->segment(4))->firstOrFail();
-        if($comment->userId == Auth::user()->id)
+        $post = Post::where('id', request()->segment(2))->firstOrFail();
+        if($comment->userId == Auth::user()->id or $post->userId == Auth::user()->id)
             $comment->delete();
-        // return dd($commentId);
-     //    if($commentId == Auth::user()->id)
-     //        $comment = Comment::where('id', $commentId)->first();
-    	//     $comment->delete();
     	return redirect('/posts/' . request()->segment(2) . '/comments');
     }
 
